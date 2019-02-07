@@ -25,6 +25,9 @@ Game::~Game()
 void Game::Run()
 {
 	Init();
+
+	m_TestSprite.Init(-0.5f, -0.5f, 1.0f, 1.0f);
+
 	GameLoop();
 }
 
@@ -88,15 +91,7 @@ void Game::DrawGame()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glEnableClientState(GL_COLOR_ARRAY);
-
-	glColor3f(0.0f, 1.0f, 0.0f);
-	glBegin(GL_TRIANGLES);
-	glVertex2f(0, 0);
-	glVertex2f(0, 500);
-	glVertex2f(500, 500);
-	   
-	glEnd();
+	m_TestSprite.Draw();
 
 	SDL_GL_SwapWindow(p_mWindow);
 }

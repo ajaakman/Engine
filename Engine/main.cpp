@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "Game.h"
+#include "Sprite.h"
 
 int main(int argc, char** argv)
 {
