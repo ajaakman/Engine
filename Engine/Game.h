@@ -2,7 +2,7 @@
 #include "SDL/SDL.h"
 #include "GL/glew.h"
 
-#include "Sprite.h"
+#include "Graphics/Renderables/Sprite.h"
 
 enum class GameState {PLAY, END};
 

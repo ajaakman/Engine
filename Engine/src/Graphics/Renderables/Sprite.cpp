@@ -1,6 +1,5 @@
 #include "Sprite.h"
 
-
 Sprite::Sprite()
 	:m_vboID(0)
 {	

@@ -48,7 +48,7 @@ void Game::Init()
 	{
 		FatalError("SDL _GL context could not be created!");
 	}
-
+	// glewInit() needs to be called after a valid GLContext is set.
 	GLenum error = glewInit();
 	if (error != GLEW_OK)
 	{
