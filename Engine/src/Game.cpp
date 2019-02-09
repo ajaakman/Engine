@@ -1,15 +1,8 @@
-#include "Game.h"
 #include <iostream>
 #include <string>
 
-void FatalError(std::string errorString)
-{
-	std::cout << errorString << std::endl;
-	std::cout << "Press any key to quit...";
-	int tmp;
-	std::cin >> tmp;
-	SDL_Quit();
-}
+#include "Game.h"
+#include "Errors.h"
 
 Game::Game()
 	:p_mWindow(nullptr), n_mScreenWidth(1024), n_mScreenHeight(768)
@@ -25,6 +18,7 @@ Game::~Game()
 void Game::Run()
 {
 	Init();
+	std::cout << glGetString(GL_VERSION) << std::endl;
 
 	m_TestSprite.Init(-0.5f, -0.5f, 1.0f, 1.0f);
 
@@ -57,7 +51,16 @@ void Game::Init()
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	glClearColor(1.0f, 0.0f, 0.8f, 1.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+	InitShaders();
+}
+
+void Game::InitShaders()
+{
+	m_ColorProgram.CompileShaders("src/Graphics/Renderer/Shaders/BasicShader.vert", "src/Graphics/Renderer/Shaders/BasicShader.frag");
+	m_ColorProgram.AddAttribute("vertexPosition");
+	m_ColorProgram.LinkShaders();
 }
 
 void Game::GameLoop()
@@ -91,7 +94,9 @@ void Game::DrawGame()
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+	m_ColorProgram.Bind();
 	m_TestSprite.Draw();
+	m_ColorProgram.UnBind();
 
 	SDL_GL_SwapWindow(p_mWindow);
 }
