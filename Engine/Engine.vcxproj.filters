@@ -44,6 +44,9 @@
     <ClInclude Include="src\Errors.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Graphics\Renderer\Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Graphics\Renderer\Shaders\BasicShader.frag" />

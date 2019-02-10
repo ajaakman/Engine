@@ -150,6 +150,7 @@
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\Graphics\Renderer\Shaders\GLSL.h" />
     <ClInclude Include="src\Graphics\Renderables\Sprite.h" />
+    <ClInclude Include="src\Graphics\Renderer\Vertex.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="src\Graphics\Renderer\Shaders\BasicShader.frag" />

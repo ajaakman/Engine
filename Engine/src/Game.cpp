@@ -60,6 +60,7 @@ void Game::InitShaders()
 {
 	m_ColorProgram.CompileShaders("src/Graphics/Renderer/Shaders/BasicShader.vert", "src/Graphics/Renderer/Shaders/BasicShader.frag");
 	m_ColorProgram.AddAttribute("vertexPosition");
+	m_ColorProgram.AddAttribute("vertexColor");
 	m_ColorProgram.LinkShaders();
 }
 

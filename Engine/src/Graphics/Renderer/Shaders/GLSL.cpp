@@ -1,5 +1,4 @@
 #include <fstream>
-#include <vector>
 
 #include "GLSL.h"
 #include "Errors.h"
@@ -16,6 +15,8 @@ GLSL::~GLSL()
 
 void GLSL::CompileShaders(const std::string & vertexShaderFilepath, const std::string & fragmentShaderFilepath)
 {
+	m_ProgramID = glCreateProgram();
+
 	m_VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
 	if (!m_VertexShaderID)
 		FatalError("Vertex shader failed to be created!");
@@ -31,7 +32,6 @@ void GLSL::CompileShaders(const std::string & vertexShaderFilepath, const std::s
 
 void GLSL::LinkShaders()
 {
-	m_ProgramID = glCreateProgram();
 	glAttachShader(m_ProgramID, m_VertexShaderID);
 	glAttachShader(m_ProgramID, m_FragmentShaderID);
 
@@ -45,7 +45,7 @@ void GLSL::LinkShaders()
 	{
 		GLint maxLength = 0;
 		glGetProgramiv(m_ProgramID, GL_INFO_LOG_LENGTH, &maxLength);
-		std::vector<char> errorLog(maxLength);
+		char* errorLog = (char*)alloca(maxLength * sizeof(char));
 		glGetProgramInfoLog(m_ProgramID, maxLength, &maxLength, &errorLog[0]);
 
 		glDeleteProgram(m_ProgramID);
@@ -106,15 +106,15 @@ void GLSL::CompileShader(const std::string & filepath, GLuint id)
 
 	glCompileShader(id);
 
-	GLint success = 0;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &success);
+	GLint result = 0;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
 
-	if (success == GL_FALSE)
+	if (result == GL_FALSE)
 	{
 		GLint maxLength = 0;
 		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &maxLength);
 
-		std::vector<char> errorLog(maxLength);
+		char* errorLog = (char*)alloca(maxLength * sizeof(char));
 		glGetShaderInfoLog(id, maxLength, &maxLength, &errorLog[0]);
 
 		glDeleteShader(id);
