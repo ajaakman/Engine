@@ -4,15 +4,16 @@
 #include "Game.h"
 #include "Errors.h"
 
-Game::Game()
-	:p_mWindow(nullptr), n_mScreenWidth(1024), n_mScreenHeight(768)
-{
-	mGameState = GameState::PLAY;
-}
+Game::Game() :  m_pWindow(nullptr), 
+				m_nScreenWidth(1024), 
+				m_nScreenHeight(768), 
+				m_GameState(GameState::PLAY),
+				m_fTime(0.0f)
+{}
 
 Game::~Game()
 {
-	SDL_DestroyWindow(p_mWindow);
+	SDL_DestroyWindow(m_pWindow);
 }
 
 void Game::Run()
@@ -29,14 +30,14 @@ void Game::Init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	   
-	p_mWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, n_mScreenWidth, n_mScreenHeight, SDL_WINDOW_OPENGL);
+	m_pWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_nScreenWidth, m_nScreenHeight, SDL_WINDOW_OPENGL);
 
-	if (p_mWindow == nullptr)
+	if (m_pWindow == nullptr)
 	{
 		FatalError("SDL Window could not be created!");
 	}
 
-	SDL_GLContext glContext = SDL_GL_CreateContext(p_mWindow);
+	SDL_GLContext glContext = SDL_GL_CreateContext(m_pWindow);
 
 	if (glContext == nullptr)
 	{
@@ -66,9 +67,10 @@ void Game::InitShaders()
 
 void Game::GameLoop()
 {
-	while (mGameState != GameState::END)
+	while (m_GameState != GameState::END)
 	{
 		ProcessInput();
+		m_fTime += 0.01f;
 		DrawGame();
 	}
 }
@@ -81,7 +83,7 @@ void Game::ProcessInput()
 		switch (e.type)
 		{
 		case SDL_QUIT:
-			mGameState = GameState::END;
+			m_GameState = GameState::END;
 			break;
 		case SDL_MOUSEMOTION:
 			std::cout << e.motion.x << " " << e.motion.y << std::endl;;
@@ -92,12 +94,17 @@ void Game::ProcessInput()
 
 void Game::DrawGame()
 {
+
 	glClearDepth(1.0);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	m_ColorProgram.Bind();
+
+	GLuint timeLocation = m_ColorProgram.getUniformLocation("time");
+	glUniform1f(timeLocation, m_fTime);
+
 	m_TestSprite.Draw();
 	m_ColorProgram.UnBind();
 
-	SDL_GL_SwapWindow(p_mWindow);
+	SDL_GL_SwapWindow(m_pWindow);
 }

@@ -52,17 +52,17 @@ void Sprite::Init(float x, float y, float width, float height)
 	{
 		vertexData[i].color.r = 255;
 		vertexData[i].color.g = 0;
-		vertexData[i].color.b = 125;
+		vertexData[i].color.b = 255;
 		vertexData[i].color.a = 255;
 	}
 
-	vertexData[1].color.r = 125;
+	vertexData[1].color.r = 0;
 	vertexData[1].color.g = 0;
 	vertexData[1].color.b = 255;
 	
-	vertexData[2].color.r = 0;
-	vertexData[2].color.g = 152;
-	vertexData[2].color.b = 255;
+	vertexData[4].color.r = 0;
+	vertexData[4].color.g = 255;
+	vertexData[4].color.b = 0;
 
 	glBindBuffer(GL_ARRAY_BUFFER, m_vboID);
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertexData), vertexData, GL_STATIC_DRAW);

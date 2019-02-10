@@ -22,15 +22,17 @@ private:
 	void ProcessInput();
 	void DrawGame();
 
-	SDL_Window* p_mWindow;
-	int n_mScreenWidth;
-	int n_mScreenHeight;
+	SDL_Window* m_pWindow;
+	int m_nScreenWidth;
+	int m_nScreenHeight;
 
-	GameState mGameState;
+	GameState m_GameState;
 
 	Sprite m_TestSprite;
 
 	GLSL m_ColorProgram;
+
+	float m_fTime;
 
 };
 

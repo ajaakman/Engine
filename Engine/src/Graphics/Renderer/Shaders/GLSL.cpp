@@ -70,6 +70,15 @@ void GLSL::AddAttribute(const std::string & attributeName)
 	glBindAttribLocation(m_ProgramID, m_nNumAttributes++, attributeName.c_str());
 }
 
+GLuint GLSL::getUniformLocation(const std::string& uniformName)
+{
+	GLuint location = glGetUniformLocation(m_ProgramID, uniformName.c_str());
+	if (location == GL_INVALID_INDEX)	
+		FatalError("Uniform " + uniformName + " not found in shader");
+	
+	return location;
+}
+
 void GLSL::Bind()
 {
 	glUseProgram(m_ProgramID);
@@ -120,7 +129,7 @@ void GLSL::CompileShader(const std::string & filepath, GLuint id)
 		glDeleteShader(id);
 
 		std::printf("%s\n", &errorLog[0]);
-		FatalError("Shader" + filepath + " failed to compile!");
+		FatalError("Shader " + filepath + " failed to compile!");
 
 		return;
 	}
