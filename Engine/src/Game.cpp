@@ -19,9 +19,9 @@ Game::~Game()
 void Game::Run()
 {
 	Init();
-	std::cout << glGetString(GL_VERSION) << std::endl;
+	GL(std::cout << glGetString(GL_VERSION) << std::endl);
 
-	m_TestSprite.Init(-0.5f, -0.5f, 1.0f, 1.0f);
+	m_TestSprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
 
 	GameLoop();
 }
@@ -95,13 +95,13 @@ void Game::ProcessInput()
 void Game::DrawGame()
 {
 
-	glClearDepth(1.0);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+	GL(glClearDepth(1.0));
+	GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
 	m_ColorProgram.Bind();
 
 	GLuint timeLocation = m_ColorProgram.getUniformLocation("time");
-	glUniform1f(timeLocation, m_fTime);
+	GL(glUniform1f(timeLocation, m_fTime));
 
 	m_TestSprite.Draw();
 	m_ColorProgram.UnBind();
