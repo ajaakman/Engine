@@ -1,16 +1,21 @@
 #version 130
 
-in vec2 vertexPostion;
+in vec2 fragmentPosition;
 in vec4 fragmentColor;
+in vec2 fragmentUV;
 
 out vec4 color;
 
 uniform float time;
+uniform sampler2D tex2D;
 
 void main()
 {
-	color = vec4(fragmentColor.r * (cos(fragmentColor.x * 4.0 + time) + 1.0) * 0.5, 
-				 fragmentColor.g * (cos(fragmentColor.y * 8.0 + time) + 1.0) * 0.5,
-				 fragmentColor.b * (cos(fragmentColor.x * 2.0 + time) + 1.0) * 0.5,
-				 fragmentColor.a );
+	vec4 textureColor = texture(tex2D, fragmentUV);
+
+
+	color = vec4(fragmentColor.r * (cos(fragmentPosition.x * 4.0 + time) + 1.0) * 0.5, 
+				 fragmentColor.g * (cos(fragmentPosition.y * 8.0 + time) + 1.0) * 0.5,
+				 fragmentColor.b * (cos(fragmentPosition.x * 2.0 + time) + 1.0) * 0.5,
+				 fragmentColor.a ) * textureColor;
 }

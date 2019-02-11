@@ -139,15 +139,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Errors.cpp" />
+    <ClCompile Include="src\Utililites\ImageLoader.cpp" />
+    <ClCompile Include="src\Utililites\IOManager.cpp" />
+    <ClCompile Include="src\Utililites\Errors.cpp" />
     <ClCompile Include="src\Game.cpp" />
+    <ClCompile Include="src\Utililites\picoPNG.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Shaders\GLSL.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Graphics\Renderables\Sprite.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Errors.h" />
+    <ClInclude Include="src\Utililites\ImageLoader.h" />
+    <ClInclude Include="src\Utililites\IOManager.h" />
+    <ClInclude Include="src\Utililites\Errors.h" />
     <ClInclude Include="src\Game.h" />
+    <ClInclude Include="src\Graphics\GLTexture.h" />
+    <ClInclude Include="src\Utililites\picoPNG.h" />
     <ClInclude Include="src\Graphics\Renderer\Shaders\GLSL.h" />
     <ClInclude Include="src\Graphics\Renderables\Sprite.h" />
     <ClInclude Include="src\Graphics\Renderer\Vertex.h" />
@@ -155,6 +162,9 @@
   <ItemGroup>
     <None Include="src\Graphics\Renderer\Shaders\BasicShader.frag" />
     <None Include="src\Graphics\Renderer\Shaders\BasicShader.vert" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="src\Graphics\Textures\jimmyJump_pack\PNG\CharacterRight_Standing.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

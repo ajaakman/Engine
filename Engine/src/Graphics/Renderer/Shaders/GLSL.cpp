@@ -1,7 +1,7 @@
 #include <fstream>
 
 #include "GLSL.h"
-#include "Errors.h"
+#include "Utililites/Errors.h"
 
 
 GLSL::GLSL()
@@ -72,7 +72,8 @@ void GLSL::AddAttribute(const std::string & attributeName)
 
 GLuint GLSL::getUniformLocation(const std::string& uniformName)
 {
-	GL(GLuint location = glGetUniformLocation(m_ProgramID, uniformName.c_str()));
+	GL(GLint location = glGetUniformLocation(m_ProgramID, uniformName.c_str()));
+	ASSERT(location != -1);
 	if (location == GL_INVALID_INDEX)	
 		FatalError("Uniform " + uniformName + " not found in shader");
 	

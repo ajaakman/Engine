@@ -2,7 +2,8 @@
 #include <string>
 
 #include "Game.h"
-#include "Errors.h"
+#include "Utililites/Errors.h"
+#include "Utililites/ImageLoader.h"
 
 Game::Game() :  m_pWindow(nullptr), 
 				m_nScreenWidth(1024), 
@@ -19,9 +20,10 @@ Game::~Game()
 void Game::Run()
 {
 	Init();
-	GL(std::cout << glGetString(GL_VERSION) << std::endl);
+	DBG(GL(std::cout << glGetString(GL_VERSION) << std::endl));
 
-	m_TestSprite.Init(-1.0f, -1.0f, 2.0f, 2.0f);
+	m_TestSprite.Init(-0.5f, -0.5f, 1.0f, 1.0f);
+	m_PlayerTexture = ImageLoader::loadPNG("src/Graphics/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 
 	GameLoop();
 }
@@ -52,7 +54,7 @@ void Game::Init()
 
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	GL(glClearColor(0.9f, 0.9f, 0.9f, 1.0f));
 
 	InitShaders();
 }
@@ -62,6 +64,7 @@ void Game::InitShaders()
 	m_ColorProgram.CompileShaders("src/Graphics/Renderer/Shaders/BasicShader.vert", "src/Graphics/Renderer/Shaders/BasicShader.frag");
 	m_ColorProgram.AddAttribute("vertexPosition");
 	m_ColorProgram.AddAttribute("vertexColor");
+	m_ColorProgram.AddAttribute("vertexUV");
 	m_ColorProgram.LinkShaders();
 }
 
@@ -70,8 +73,8 @@ void Game::GameLoop()
 	while (m_GameState != GameState::END)
 	{
 		ProcessInput();
-		m_fTime += 0.01f;
-		DrawGame();
+		DrawFrame();
+		m_fTime += 0.1f;
 	}
 }
 
@@ -86,24 +89,28 @@ void Game::ProcessInput()
 			m_GameState = GameState::END;
 			break;
 		case SDL_MOUSEMOTION:
-			std::cout << e.motion.x << " " << e.motion.y << std::endl;;
+			//std::cout << e.motion.x << " " << e.motion.y << std::endl;;
 			break;
 		}
 	}
 }
 
-void Game::DrawGame()
+void Game::DrawFrame()
 {
-
 	GL(glClearDepth(1.0));
 	GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-
+	
 	m_ColorProgram.Bind();
+	GL(glActiveTexture(GL_TEXTURE0));
+	GL(glBindTexture(GL_TEXTURE_2D, m_PlayerTexture.id));
+	GLint textureLocation = m_ColorProgram.getUniformLocation("tex2D");
+	GL(glUniform1i(textureLocation, 0));
 
-	GLuint timeLocation = m_ColorProgram.getUniformLocation("time");
+	GLint timeLocation = m_ColorProgram.getUniformLocation("time");
 	GL(glUniform1f(timeLocation, m_fTime));
 
 	m_TestSprite.Draw();
+	GL(glBindTexture(GL_TEXTURE_2D, 0));
 	m_ColorProgram.UnBind();
 
 	SDL_GL_SwapWindow(m_pWindow);

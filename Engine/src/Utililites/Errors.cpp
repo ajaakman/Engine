@@ -8,12 +8,14 @@
 
 void FatalError(std::string errorString)
 {
+	DBG(
 	std::cout << errorString << std::endl;
 	std::cout << "Press any key to quit...";
 	int tmp;
 	std::cin >> tmp;
 	SDL_Quit();
 	exit(34404);
+	)
 }
 
 void GLClearError()
