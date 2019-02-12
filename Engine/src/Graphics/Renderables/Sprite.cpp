@@ -3,6 +3,7 @@
 #include "Sprite.h"
 #include "Graphics/Renderer/Vertex.h"
 #include "Utililites/Errors.h"
+#include "ResourceManagement/ResourceManager.h"
 
 Sprite::Sprite()
 	:m_vboID(0)
@@ -17,12 +18,13 @@ Sprite::~Sprite()
 	}
 }
 
-void Sprite::Init(float x, float y, float width, float height)
+void Sprite::Init(float x, float y, float width, float height, std::string texutePath)
 {
 	m_nX = x;
 	m_nY = y;
 	m_nWidth = width;
 	m_nHeight = height;
+	m_Texture = ResourceManager::getTexture(texutePath);
 
 	if (m_vboID == 0)
 	{
@@ -59,6 +61,8 @@ void Sprite::Init(float x, float y, float width, float height)
 
 void Sprite::Draw()
 {
+	GL(glBindTexture(GL_TEXTURE_2D, m_Texture.id));
+
 	GL(glBindBuffer(GL_ARRAY_BUFFER, m_vboID));
 	GL(glEnableVertexAttribArray(0));
 

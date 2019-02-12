@@ -3,7 +3,6 @@
 
 #include "Game.h"
 #include "Utililites/Errors.h"
-#include "Utililites/ImageLoader.h"
 
 Game::Game() :  m_pWindow(nullptr), 
 				m_nScreenWidth(1024), 
@@ -22,9 +21,17 @@ void Game::Run()
 	Init();
 	DBG(GL(std::cout << glGetString(GL_VERSION) << std::endl));
 
-	m_TestSprite.Init(-0.5f, -0.5f, 1.0f, 1.0f);
-	m_PlayerTexture = ImageLoader::loadPNG("src/Graphics/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+	int spriteRow = 10;
 
+	for (int i = 0; i < spriteRow; i++)
+	{
+		for (int j = 0; j < spriteRow; j++)
+		{
+			m_Sprites.push_back(new Sprite());
+			m_Sprites.back()->Init(-1.0f + i * (1.0f/(float)spriteRow*2.0f), -1.0f + j * (1.0f / (float)spriteRow*2.0f), 2.0f / 10.0f, 2.0f / 10.0f, "src/Graphics/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+		}
+	}
+			 
 	GameLoop();
 }
 
@@ -102,14 +109,15 @@ void Game::DrawFrame()
 	
 	m_ColorProgram.Bind();
 	GL(glActiveTexture(GL_TEXTURE0));
-	GL(glBindTexture(GL_TEXTURE_2D, m_PlayerTexture.id));
 	GLint textureLocation = m_ColorProgram.getUniformLocation("tex2D");
 	GL(glUniform1i(textureLocation, 0));
 
 	GLint timeLocation = m_ColorProgram.getUniformLocation("time");
 	GL(glUniform1f(timeLocation, m_fTime));
 
-	m_TestSprite.Draw();
+	for (auto & sprite : m_Sprites)
+		sprite->Draw();
+
 	GL(glBindTexture(GL_TEXTURE_2D, 0));
 	m_ColorProgram.UnBind();
 

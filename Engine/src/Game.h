@@ -1,4 +1,6 @@
 #pragma once
+#include <vector>
+
 #include "GL/glew.h"
 #include "SDL/SDL.h"
 
@@ -29,8 +31,7 @@ private:
 
 	GameState m_GameState;
 
-	Sprite m_TestSprite;
-	GLTexture m_PlayerTexture;
+	std::vector<Sprite*> m_Sprites;
 
 	GLSL m_ColorProgram;
 
