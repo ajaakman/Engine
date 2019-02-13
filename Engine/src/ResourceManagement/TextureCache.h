@@ -1,5 +1,5 @@
 #pragma once
-#include <map>
+#include <unordered_map>
 #include "Graphics/GLTexture.h"
 
 class TextureCache
@@ -11,6 +11,6 @@ public:
 	GLTexture getTexture(std::string texturePath);
 
 private:
-	std::map<std::string, GLTexture> m_TextureMap;
+	std::unordered_map<std::string, GLTexture> m_TextureMap;
 };
 

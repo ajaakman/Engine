@@ -8,7 +8,8 @@ Game::Game() :  m_pWindow(nullptr),
 				m_nScreenWidth(1024), 
 				m_nScreenHeight(768), 
 				m_GameState(GameState::PLAY),
-				m_fTime(0.0f)
+				m_fTime(0.0f),
+				m_fMaxFps(60.0f)
 {}
 
 Game::~Game()
@@ -19,7 +20,7 @@ Game::~Game()
 void Game::Run()
 {
 	Init();
-	DBG(GL(std::cout << glGetString(GL_VERSION) << std::endl));
+	DBG(GL(std::printf("***     OpenGL Version: %s     ***\n", glGetString(GL_VERSION))));
 
 	int spriteRow = 10;
 
@@ -39,6 +40,8 @@ void Game::Init()
 {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	   
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+
 	m_pWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_nScreenWidth, m_nScreenHeight, SDL_WINDOW_OPENGL);
 
 	if (m_pWindow == nullptr)
@@ -59,7 +62,7 @@ void Game::Init()
 		FatalError("Could not initialize GLEW!");
 	}
 
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetSwapInterval(0); // VSync
 
 	GL(glClearColor(0.9f, 0.9f, 0.9f, 1.0f));
 
@@ -79,9 +82,26 @@ void Game::GameLoop()
 {
 	while (m_GameState != GameState::END)
 	{
+		float startTicks = SDL_GetTicks();
+
+
 		ProcessInput();
 		DrawFrame();
 		m_fTime += 0.1f;
+
+		CalculateFPS();
+		static int frameCounter = 0;
+		frameCounter++;
+		if (frameCounter == 60)
+		{
+			std::cout << m_fFps << "\n";
+			frameCounter = 0;
+		}
+
+
+		float frameTicks = SDL_GetTicks() - startTicks;
+		if (1000.0f / m_fMaxFps > frameTicks)
+			SDL_Delay(1000.0f / m_fMaxFps - frameTicks);
 	}
 }
 
@@ -123,3 +143,38 @@ void Game::DrawFrame()
 
 	SDL_GL_SwapWindow(m_pWindow);
 }
+
+void Game::CalculateFPS()
+{
+	static const int NUM_SAMPLES = 60;
+	static float frameTimes[NUM_SAMPLES];
+	static int currentFrame = 0;
+
+	static float prevTicks = SDL_GetTicks();
+	float currentTicks = SDL_GetTicks();
+
+	m_fDeltaTime = currentTicks - prevTicks;
+	frameTimes[currentFrame % NUM_SAMPLES] = m_fDeltaTime;
+
+	prevTicks = currentTicks;
+
+	int count;
+	currentFrame++;
+
+	if (currentFrame < NUM_SAMPLES)
+		count = currentFrame;
+	else
+		count = NUM_SAMPLES;
+
+	float frameTimeAverage = 0;
+	for (int i = 0; i < count; ++i)
+		frameTimeAverage += frameTimes[i];
+
+	frameTimeAverage /= count;
+
+	if (frameTimeAverage > 0)
+		m_fFps = 1000.0f / frameTimeAverage;
+	else
+		m_fFps = 60.0f;	
+}
+

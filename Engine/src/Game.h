@@ -24,6 +24,7 @@ private:
 	void GameLoop();
 	void ProcessInput();
 	void DrawFrame();
+	void CalculateFPS();
 
 	SDL_Window* m_pWindow;
 	int m_nScreenWidth;
@@ -36,6 +37,9 @@ private:
 	GLSL m_ColorProgram;
 
 	float m_fTime;
+	float m_fMaxFps;
+	float m_fFps;
+	float m_fDeltaTime;
 
 };
 
