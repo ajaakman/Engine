@@ -2,16 +2,16 @@
 #include "Utililites/ImageLoader.h"
 #include <iostream>
 
-TextureCache::TextureCache()
+Engine::TextureCache::TextureCache()
 {
 }
 
 
-TextureCache::~TextureCache()
+Engine::TextureCache::~TextureCache()
 {
 }
 
-GLTexture TextureCache::getTexture(std::string texturePath)
+Engine::GLTexture Engine::TextureCache::getTexture(std::string texturePath)
 {
 	auto mit = m_TextureMap.find(texturePath);
 

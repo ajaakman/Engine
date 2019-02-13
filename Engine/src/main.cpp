@@ -1,12 +1,12 @@
 #include <iostream>
 
-#include "Game.h"
+#include "GameCore.h"
 
 int main(int argc, char** argv)
 {
-	std::cout << "Running from Engine entry point..." << std::endl;
+	std::cout << "Running from Engine..." << std::endl;
 	{
-		Game g;
+		Engine::GameCore g;
 		g.Run();
 	}
 

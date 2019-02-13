@@ -3,7 +3,7 @@
 #include "Utililites/IOManager.h"
 #include "Utililites/Errors.h"
 
-GLTexture ImageLoader::loadPNG(std::string filePath)
+Engine::GLTexture Engine::ImageLoader::loadPNG(std::string filePath)
 {
 	GLTexture texture = {};
 

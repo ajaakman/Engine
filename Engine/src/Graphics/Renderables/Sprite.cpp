@@ -5,12 +5,12 @@
 #include "Utililites/Errors.h"
 #include "ResourceManagement/ResourceManager.h"
 
-Sprite::Sprite()
+Engine::Sprite::Sprite()
 	:m_vboID(0)
 {	
 }
 
-Sprite::~Sprite()
+Engine::Sprite::~Sprite()
 {
 	if (m_vboID != 0)
 	{
@@ -18,7 +18,7 @@ Sprite::~Sprite()
 	}
 }
 
-void Sprite::Init(float x, float y, float width, float height, std::string texutePath)
+void Engine::Sprite::Init(float x, float y, float width, float height, std::string texutePath)
 {
 	m_nX = x;
 	m_nY = y;
@@ -59,7 +59,7 @@ void Sprite::Init(float x, float y, float width, float height, std::string texut
 	GL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-void Sprite::Draw()
+void Engine::Sprite::Draw()
 {
 	GL(glBindTexture(GL_TEXTURE_2D, m_Texture.id));
 

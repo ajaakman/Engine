@@ -1,9 +1,9 @@
 #include <iostream>
-#include "../Engine/src/Game.h"
+#include "Game.h"
 
 int main(int argc, char** argv)
 {
-	std::cout << "Running from Sandbox entry point..." << std::endl;
+	std::cout << "Running Sandbox project..." << std::endl;
 
 	{
 		Game g;

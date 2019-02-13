@@ -1,23 +1,22 @@
 #include <iostream>
 #include <string>
 
-#include "Game.h"
-#include "Utililites/Errors.h"
+#include "GameCore.h"
+#include "Engine.h"
 
-Game::Game() :  m_pWindow(nullptr), 
-				m_nScreenWidth(1024), 
-				m_nScreenHeight(768), 
-				m_GameState(GameState::PLAY),
-				m_fTime(0.0f),
-				m_fMaxFps(60.0f)
-{}
 
-Game::~Game()
+Engine::GameCore::GameCore() :  m_nScreenWidth(1024),
+								m_nScreenHeight(768),
+								m_GameState(GameState::PLAY),
+								m_fTime(0.0f),
+								m_fMaxFps(60.0f)
+								{}
+
+Engine::GameCore::~GameCore()
 {
-	SDL_DestroyWindow(m_pWindow);
 }
 
-void Game::Run()
+void Engine::GameCore::Run()
 {
 	Init();
 	DBG(GL(std::printf("***     OpenGL Version: %s     ***\n", glGetString(GL_VERSION))));
@@ -28,48 +27,24 @@ void Game::Run()
 	{
 		for (int j = 0; j < spriteRow; j++)
 		{
-			m_Sprites.push_back(new Sprite());
-			m_Sprites.back()->Init(-1.0f + i * (1.0f/(float)spriteRow*2.0f), -1.0f + j * (1.0f / (float)spriteRow*2.0f), 2.0f / 10.0f, 2.0f / 10.0f, "../Resources/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+			m_Sprites.push_back(new Engine::Sprite());
+			m_Sprites.back()->Init(-1.0f + i * (1.0f / (float)spriteRow*2.0f), -1.0f + j * (1.0f / (float)spriteRow*2.0f), 2.0f / 10.0f, 2.0f / 10.0f, "../Resources/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 		}
 	}
-			 
+
 	GameLoop();
 }
 
-void Game::Init()
+void Engine::GameCore::Init()
 {
-	SDL_Init(SDL_INIT_EVERYTHING);
-	   
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	Engine::Init();
 
-	m_pWindow = SDL_CreateWindow("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, m_nScreenWidth, m_nScreenHeight, SDL_WINDOW_OPENGL);
-
-	if (m_pWindow == nullptr)
-	{
-		FatalError("SDL Window could not be created!");
-	}
-
-	SDL_GLContext glContext = SDL_GL_CreateContext(m_pWindow);
-
-	if (glContext == nullptr)
-	{
-		FatalError("SDL _GL context could not be created!");
-	}
-	// glewInit() needs to be called after a valid GLContext is set.
-	GLenum error = glewInit();
-	if (error != GLEW_OK)
-	{
-		FatalError("Could not initialize GLEW!");
-	}
-
-	SDL_GL_SetSwapInterval(0); // VSync
-
-	GL(glClearColor(0.9f, 0.9f, 0.9f, 1.0f));
+	m_Window.Init("My Game", m_nScreenWidth, m_nScreenHeight, 0);
 
 	InitShaders();
 }
 
-void Game::InitShaders()
+void Engine::GameCore::InitShaders()
 {
 	m_ColorProgram.CompileShaders("../Resources/Shaders/BasicShader.vert", "../Resources/Shaders/BasicShader.frag");
 	m_ColorProgram.AddAttribute("vertexPosition");
@@ -78,7 +53,7 @@ void Game::InitShaders()
 	m_ColorProgram.LinkShaders();
 }
 
-void Game::GameLoop()
+void Engine::GameCore::GameLoop()
 {
 	while (m_GameState != GameState::END)
 	{
@@ -105,7 +80,7 @@ void Game::GameLoop()
 	}
 }
 
-void Game::ProcessInput()
+void Engine::GameCore::ProcessInput()
 {
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
@@ -122,11 +97,11 @@ void Game::ProcessInput()
 	}
 }
 
-void Game::DrawFrame()
+void Engine::GameCore::DrawFrame()
 {
 	GL(glClearDepth(1.0));
 	GL(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
-	
+
 	m_ColorProgram.Bind();
 	GL(glActiveTexture(GL_TEXTURE0));
 	GLint textureLocation = m_ColorProgram.getUniformLocation("tex2D");
@@ -141,10 +116,10 @@ void Game::DrawFrame()
 	GL(glBindTexture(GL_TEXTURE_2D, 0));
 	m_ColorProgram.UnBind();
 
-	SDL_GL_SwapWindow(m_pWindow);
+	m_Window.SwapBuffer();
 }
 
-void Game::CalculateFPS()
+void Engine::GameCore::CalculateFPS()
 {
 	static const int NUM_SAMPLES = 60;
 	static float frameTimes[NUM_SAMPLES];
@@ -175,6 +150,7 @@ void Game::CalculateFPS()
 	if (frameTimeAverage > 0)
 		m_fFps = 1000.0f / frameTimeAverage;
 	else
-		m_fFps = 60.0f;	
+		m_fFps = 60.0f;
 }
+
 

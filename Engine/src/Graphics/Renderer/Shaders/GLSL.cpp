@@ -4,16 +4,16 @@
 #include "Utililites/Errors.h"
 
 
-GLSL::GLSL()
+Engine::GLSL::GLSL()
 :m_nNumAttributes(0), m_ProgramID(0), m_VertexShaderID(0), m_FragmentShaderID(0)
 {
 }
 
-GLSL::~GLSL()
+Engine::GLSL::~GLSL()
 {
 }
 
-void GLSL::CompileShaders(const std::string & vertexShaderFilepath, const std::string & fragmentShaderFilepath)
+void Engine::GLSL::CompileShaders(const std::string & vertexShaderFilepath, const std::string & fragmentShaderFilepath)
 {
 	GL(m_ProgramID = glCreateProgram());
 
@@ -30,7 +30,7 @@ void GLSL::CompileShaders(const std::string & vertexShaderFilepath, const std::s
 
 }
 
-void GLSL::LinkShaders()
+void Engine::GLSL::LinkShaders()
 {
 	GL(glAttachShader(m_ProgramID, m_VertexShaderID));
 	GL(glAttachShader(m_ProgramID, m_FragmentShaderID));
@@ -65,12 +65,12 @@ void GLSL::LinkShaders()
 
 }
 
-void GLSL::AddAttribute(const std::string & attributeName)
+void Engine::GLSL::AddAttribute(const std::string & attributeName)
 {
 	GL(glBindAttribLocation(m_ProgramID, m_nNumAttributes++, attributeName.c_str()));
 }
 
-GLuint GLSL::getUniformLocation(const std::string& uniformName)
+GLuint Engine::GLSL::getUniformLocation(const std::string& uniformName)
 {
 	GL(GLint location = glGetUniformLocation(m_ProgramID, uniformName.c_str()));
 	ASSERT(location != -1);
@@ -80,21 +80,21 @@ GLuint GLSL::getUniformLocation(const std::string& uniformName)
 	return location;
 }
 
-void GLSL::Bind()
+void Engine::GLSL::Bind()
 {
 	GL(glUseProgram(m_ProgramID));
 	GL(for (int i = 0; i < m_nNumAttributes; ++i)
 		glEnableVertexAttribArray(i));
 }
 
-void GLSL::UnBind()
+void Engine::GLSL::UnBind()
 {
 	GL(glUseProgram(0));
 	GL(for (int i = 0; i < m_nNumAttributes; ++i)
 		glDisableVertexAttribArray(i));
 }
 
-void GLSL::CompileShader(const std::string & filepath, GLuint id)
+void Engine::GLSL::CompileShader(const std::string & filepath, GLuint id)
 {
 	std::ifstream vertexFile(filepath);
 	if (vertexFile.fail())

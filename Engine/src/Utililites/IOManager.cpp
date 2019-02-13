@@ -2,7 +2,7 @@
 
 #include <fstream>
 
-bool IOManager::readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer)
+bool Engine::IOManager::readFileToBuffer(std::string filePath, std::vector<unsigned char>& buffer)
 {
 	std::ifstream file(filePath, std::ios::binary);
 	if (file.fail())

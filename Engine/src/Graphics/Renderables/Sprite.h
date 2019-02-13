@@ -3,24 +3,27 @@
 #include "Graphics/GLTexture.h"
 #include <string>
 
-class Sprite
-{
-public:
-	Sprite();
-	~Sprite();
+namespace Engine {
 
-	void Init(float x, float y, float width, float height, std::string texutePath);
+	class Sprite
+	{
+	public:
+		Sprite();
+		~Sprite();
 
-	void Draw();
+		void Init(float x, float y, float width, float height, std::string texutePath);
 
-private:
-	float m_nX;
-	float m_nY;
-	float m_nWidth;
-	float m_nHeight;
-	GLuint m_vboID;
+		void Draw();
 
-	GLTexture m_Texture;
+	private:
+		float m_nX;
+		float m_nY;
+		float m_nWidth;
+		float m_nHeight;
+		GLuint m_vboID;
 
-};
+		GLTexture m_Texture;
 
+	};
+
+}
