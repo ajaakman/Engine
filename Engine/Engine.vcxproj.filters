@@ -18,9 +18,6 @@
     <ClCompile Include="src\Graphics\Renderables\Sprite.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Graphics\Renderer\Shaders\GLSL.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\Game.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -43,6 +40,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\ResourceManagement\TextureCache.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Graphics\Renderer\Shaders\GLSL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -80,10 +80,6 @@
     <ClInclude Include="src\ResourceManagement\TextureCache.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="src\Graphics\Renderer\Shaders\BasicShader.frag" />
-    <None Include="src\Graphics\Renderer\Shaders\BasicShader.vert" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="src\Graphics\Textures\jimmyJump_pack\PNG\CharacterRight_Standing.png">

@@ -29,7 +29,7 @@ void Game::Run()
 		for (int j = 0; j < spriteRow; j++)
 		{
 			m_Sprites.push_back(new Sprite());
-			m_Sprites.back()->Init(-1.0f + i * (1.0f/(float)spriteRow*2.0f), -1.0f + j * (1.0f / (float)spriteRow*2.0f), 2.0f / 10.0f, 2.0f / 10.0f, "src/Graphics/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
+			m_Sprites.back()->Init(-1.0f + i * (1.0f/(float)spriteRow*2.0f), -1.0f + j * (1.0f / (float)spriteRow*2.0f), 2.0f / 10.0f, 2.0f / 10.0f, "../Resources/Textures/jimmyJump_pack/PNG/CharacterRight_Standing.png");
 		}
 	}
 			 
@@ -71,7 +71,7 @@ void Game::Init()
 
 void Game::InitShaders()
 {
-	m_ColorProgram.CompileShaders("src/Graphics/Renderer/Shaders/BasicShader.vert", "src/Graphics/Renderer/Shaders/BasicShader.frag");
+	m_ColorProgram.CompileShaders("../Resources/Shaders/BasicShader.vert", "../Resources/Shaders/BasicShader.frag");
 	m_ColorProgram.AddAttribute("vertexPosition");
 	m_ColorProgram.AddAttribute("vertexColor");
 	m_ColorProgram.AddAttribute("vertexUV");

@@ -1,10 +1,10 @@
 #include <iostream>
-
-#include "Game.h"
+#include "../Engine/src/Game.h"
 
 int main(int argc, char** argv)
 {
-	std::cout << "Running from Engine entry point..." << std::endl;
+	std::cout << "Running from Sandbox entry point..." << std::endl;
+
 	{
 		Game g;
 		g.Run();
