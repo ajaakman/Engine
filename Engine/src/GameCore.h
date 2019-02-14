@@ -1,4 +1,9 @@
 #pragma once
+#ifdef USING_GLFW	
+
+#elif USING_SDL
+
+
 #include <vector>
 
 #include "Graphics/Renderer/Shaders/GLSL.h"
@@ -44,3 +49,5 @@ namespace Engine {
 	};
 
 }
+
+#endif

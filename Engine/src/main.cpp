@@ -1,3 +1,6 @@
+#ifdef USING_GLFW	
+
+#elif USING_SDL
 #include <iostream>
 
 #include "GameCore.h"
@@ -16,3 +19,5 @@ int main(int argc, char** argv)
 
 	return 0;
 }
+
+#endif

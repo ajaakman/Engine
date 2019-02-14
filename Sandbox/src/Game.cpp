@@ -4,6 +4,7 @@
 #include "Game.h"
 #include "Engine/src/Engine.h"
 
+
 Game::Game() :  m_nScreenWidth(1024), 
 				m_nScreenHeight(768), 
 				m_GameState(GameState::PLAY),
@@ -56,7 +57,12 @@ void Game::GameLoop()
 {
 	while (m_GameState != GameState::END)
 	{
+#ifdef USING_GLFW
+		glClear(GL_COLOR_BUFFER_BIT);
+		float startTicks = glfwGetTime() * 1000.0f;
+#elif USING_SDL
 		float startTicks = SDL_GetTicks();
+#endif
 
 
 		ProcessInput();
@@ -72,15 +78,21 @@ void Game::GameLoop()
 			frameCounter = 0;
 		}
 
-
+#ifdef USING_GLFW				
+		float frameTicks = glfwGetTime() * 1000.0f - startTicks;
+#elif USING_SDL
 		float frameTicks = SDL_GetTicks() - startTicks;
 		if (1000.0f / m_fMaxFps > frameTicks)
 			SDL_Delay(1000.0f / m_fMaxFps - frameTicks);
+#endif
 	}
 }
 
 void Game::ProcessInput()
 {
+#ifdef USING_GLFW		
+	glfwPollEvents();
+#elif USING_SDL
 	SDL_Event e;
 	while (SDL_PollEvent(&e))
 	{
@@ -93,7 +105,8 @@ void Game::ProcessInput()
 			//std::cout << e.motion.x << " " << e.motion.y << std::endl;;
 			break;
 		}
-	}
+	}	
+#endif
 }
 
 void Game::DrawFrame()
@@ -123,9 +136,13 @@ void Game::CalculateFPS()
 	static const int NUM_SAMPLES = 60;
 	static float frameTimes[NUM_SAMPLES];
 	static int currentFrame = 0;
-
+#ifdef USING_GLFW
+	static float prevTicks = glfwGetTime() * 1000.0f;
+	float currentTicks = glfwGetTime() * 1000.0f;
+#elif USING_SDL
 	static float prevTicks = SDL_GetTicks();
 	float currentTicks = SDL_GetTicks();
+#endif
 
 	m_fDeltaTime = currentTicks - prevTicks;
 	frameTimes[currentFrame % NUM_SAMPLES] = m_fDeltaTime;

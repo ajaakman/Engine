@@ -9,13 +9,13 @@
 
 enum class GameState {PLAY, END};
 
-class Game : public Engine::GameCore
+class Game //: public Engine::GameCore
 {
 public:
 	Game();
-	~Game() override;
+	~Game();
 
-	void Run() override;
+	void Run();
 
 private:
 	void Init();

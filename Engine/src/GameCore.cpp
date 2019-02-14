@@ -1,9 +1,10 @@
+#ifdef USING_GLFW	
+#elif USING_SDL
 #include <iostream>
 #include <string>
 
 #include "GameCore.h"
 #include "Engine.h"
-
 
 Engine::GameCore::GameCore() :  m_nScreenWidth(1024),
 								m_nScreenHeight(768),
@@ -153,4 +154,5 @@ void Engine::GameCore::CalculateFPS()
 		m_fFps = 60.0f;
 }
 
+#endif
 

@@ -1,9 +1,13 @@
 #pragma once
 
 #include <string>
-
 #include "GL/glew.h"
+
+#ifdef USING_GLFW		
+#include "GLFW/glfw3.h"
+#elif USING_SDL
 #include "SDL/SDL.h"
+#endif
 
 namespace Engine{
 
@@ -24,9 +28,14 @@ namespace Engine{
 
 	private:
 
+#ifdef USING_GLFW		
+		GLFWwindow* m_pWindow;
+#elif USING_SDL
 		SDL_Window* m_pWindow;
+#endif
 		int m_nScreenWidth;
 		int m_nScreenHeight;
 	};
 
 }
+
