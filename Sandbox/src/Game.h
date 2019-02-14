@@ -20,8 +20,7 @@ public:
 private:
 	void Init();
 	void InitShaders();
-	void GameLoop();
-	void ProcessInput();
+	void GameLoop();	
 	void DrawFrame();
 	void CalculateFPS();
 

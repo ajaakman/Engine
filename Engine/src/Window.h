@@ -22,6 +22,9 @@ namespace Engine{
 		int Init(std::string windowName, int width, int height, unsigned int currentFlags);
 
 		void SwapBuffer();
+		float GetFrameTime();
+
+		void ProcessInput();
 
 		int GetScreenWidth() { return m_nScreenWidth; }
 		int GetScreenHeight() { return m_nScreenHeight; }

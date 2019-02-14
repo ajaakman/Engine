@@ -85,3 +85,33 @@ void Engine::Window::SwapBuffer()
 	SDL_GL_SwapWindow(m_pWindow);	
 #endif
 }
+
+void Engine::Window::ProcessInput()
+{
+#ifdef USING_GLFW		
+	glfwPollEvents();
+#elif USING_SDL
+	SDL_Event e;
+	while (SDL_PollEvent(&e))
+	{
+		switch (e.type)
+		{
+		case SDL_QUIT:
+			m_GameState = GameState::END;
+			break;
+		case SDL_MOUSEMOTION:
+			//std::cout << e.motion.x << " " << e.motion.y << std::endl;;
+			break;
+		}
+	}
+#endif
+}
+
+float Engine::Window::GetFrameTime()
+{
+#ifdef USING_GLFW
+	return glfwGetTime() * 1000.0f;
+#elif USING_SDL
+	return SDL_GetTicks();
+#endif
+}

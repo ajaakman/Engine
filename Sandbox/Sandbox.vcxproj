@@ -76,8 +76,8 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\glfw-3.2.1.bin.WIN32\include;$(SolutionDir);$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\glew-2.1.0\include</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>USING_GLFW;USING_SDL;DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)Dependencies\glm;$(SolutionDir)Engine\src;$(SolutionDir)Dependencies\glfw-3.2.1.bin.WIN32\include;$(SolutionDir);$(SolutionDir)Dependencies\SDL\include;$(SolutionDir)Dependencies\glew-2.1.0\include</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>$(SolutionDir)Dependencies\glfw-3.2.1.bin.WIN32\lib-vc2015;$(SolutionDir)Dependencies\glew-2.1.0\lib\Release\Win32;$(SolutionDir)Dependencies\SDL\lib\x86;$(SolutionDir)Debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
