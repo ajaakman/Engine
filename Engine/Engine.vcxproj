@@ -139,21 +139,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\GameCore.cpp" />
-    <ClCompile Include="src\Engine.cpp" />
     <ClCompile Include="src\Graphics\Renderer\Shaders\GLSL.cpp" />
     <ClCompile Include="src\ResourceManagement\ResourceManager.cpp" />
     <ClCompile Include="src\Utililites\ImageLoader.cpp" />
     <ClCompile Include="src\Utililites\IOManager.cpp" />
     <ClCompile Include="src\Utililites\Errors.cpp" />
     <ClCompile Include="src\Utililites\picoPNG.cpp" />
-    <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Graphics\Renderables\Sprite.cpp" />
     <ClCompile Include="src\ResourceManagement\TextureCache.cpp" />
     <ClCompile Include="src\Window.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\GameCore.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\ResourceManagement\ResourceManager.h" />
     <ClInclude Include="src\Utililites\ImageLoader.h" />

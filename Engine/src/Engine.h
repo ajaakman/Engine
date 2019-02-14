@@ -1,8 +1,16 @@
 #pragma once
-#include "Utililites/Errors.h"
 
 namespace Engine {
 
-	extern int Init();
+	class EngineGame
+	{
+	private:
+	protected:
+		EngineGame() { ; }
+
+		virtual ~EngineGame() { ; }
+
+		virtual void Run() { ; }
+	};
 
 }

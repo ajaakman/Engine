@@ -5,17 +5,18 @@
 #include "Engine/src/Graphics/Renderables/Sprite.h"
 #include "Engine/src/Graphics/GLTexture.h"
 #include "Engine/src/Window.h"
-#include "Engine/src/GameCore.h"
+#include "Engine/src/Engine.h"
+
 
 enum class GameState {PLAY, END};
 
-class Game //: public Engine::GameCore
+class Game : Engine::EngineGame
 {
 public:
 	Game();
-	~Game();
+	~Game() override;
 
-	void Run();
+	void Run() override;
 
 private:
 	void Init();

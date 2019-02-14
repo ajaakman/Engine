@@ -2,7 +2,7 @@
 #include <string>
 
 #include "Game.h"
-#include "Engine/src/Engine.h"
+#include "Engine/src/Utililites/Errors.h"
 
 
 Game::Game() :  m_nScreenWidth(1024), 
@@ -37,8 +37,6 @@ void Game::Run()
 
 void Game::Init()
 {
-	Engine::Init();
-
 	m_Window.Init("My Game", m_nScreenWidth, m_nScreenHeight, 0);
 
 	InitShaders();
